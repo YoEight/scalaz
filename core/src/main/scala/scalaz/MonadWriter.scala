@@ -7,6 +7,8 @@ trait MonadWriter[F[_, _], W] extends Monad[({type f[x] = F[W, x]})#f] {
   def tell(w: W): F[W, Unit]
   def listen[A](fa: F[W, A]): F[W, (A, W)]
   def pass[A](fa: F[W, (A, W => W)]): F[W, A]
+
+  val monadWriterSyntax = new scalaz.syntax.MonadWriterSyntax[F, W]{}
 }
 
 object MonadWriter {
