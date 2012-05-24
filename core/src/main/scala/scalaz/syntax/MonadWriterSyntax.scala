@@ -10,6 +10,8 @@ trait MonadWriterOps[F[_, _], W, A] extends Ops[F[W, A]] {
      MW.bind(self)(a => MW.map(MW.tell(f(a)))(_ => a))
 
   final def written: F[W, W] = MW.map(MW.listen(self)){ case (_, w) => w }
+
+  final def listen: F[W, (A, W)] = MW.listen(self)
 }
 
 trait ToMonadWriterOps0 {
